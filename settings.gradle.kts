@@ -28,3 +28,5 @@ rootProject.name = "KotlionFBP_POC"
 include(":app")
 include(":graphLib")
 include(":main-project")
+include(":client-websockets")
+include(":server-websockets")
