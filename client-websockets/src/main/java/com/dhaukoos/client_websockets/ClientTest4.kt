@@ -26,8 +26,8 @@ fun main() = runBlocking {
     val emitJob1 = myGsEmitter(channel1)
     val IntToFrameJob = myGsProcessor<Int, Frame>(channel1, channel2) { i -> Frame.Text(i.toString()) }
 
-    val session = createSendingWebSocketSession1(client, "ws://localhost:9002/ws")
-    //val session = createSendingWebSocketSession2(client, "ws://localhost:9002/ws", channel2)
+    //val session = createSendingWebSocketSession1(client, "ws://localhost:9002/ws")
+    val session = createSendingWebSocketSession2(client, "ws://localhost:9002/ws", channel2)
 }
 
 suspend fun createSendingWebSocketSession1(
