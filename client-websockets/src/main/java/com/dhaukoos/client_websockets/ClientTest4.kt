@@ -26,25 +26,10 @@ fun main() = runBlocking {
     val emitJob1 = myGsEmitter(channel1)
     val IntToFrameJob = myGsProcessor<Int, Frame>(channel1, channel2) { i -> Frame.Text(i.toString()) }
 
-    //val session = createSendingWebSocketSession1(client, "ws://localhost:9002/ws")
-    val session = createSendingWebSocketSession2(client, "ws://localhost:9002/ws", channel2)
+    val session = createSendingWebSocketSession(client, "ws://localhost:9002/ws", channel2)
 }
 
-suspend fun createSendingWebSocketSession1(
-    client: HttpClient,
-    urlString: String,
-): DefaultClientWebSocketSession {
-
-    val session = client.webSocketSession(urlString) // Open a websocket connection
-
-    // ... use the 'session' object to send and receive data
-    sender(session)
-    receive2(session)
-
-    return session
-}
-
-suspend fun createSendingWebSocketSession2(
+suspend fun createSendingWebSocketSession(
     client: HttpClient,
     urlString: String,
     channel: Channel<Frame>
@@ -54,7 +39,7 @@ suspend fun createSendingWebSocketSession2(
 
     // ... use the 'session' object to send and receive data
     senderChannel(session, channel)
-    receive2(session)
+    receiver(session)
 
     return session
 }
@@ -75,7 +60,7 @@ suspend fun senderChannel(session: WebSocketSession, channel: Channel<Frame>) {
     }
 }
 
-suspend fun receive2(session: WebSocketSession) {
+suspend fun receiver(session: WebSocketSession) {
     for (frame in session.incoming) {
         when (frame) {
             is Frame.Text -> {
