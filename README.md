@@ -43,3 +43,9 @@ A simple FBP example with a subGraph representing the Pythagorean
 formula. The differences from the previous graph include a single emitter
 node that produces a Pair data object (as opposed to a simple data type),
 and a single input, dual output splitter node (Pair(int)=>int).
+
+## Example 5
+
+<img width="560" alt="Example6" src="https://github.com/user-attachments/assets/497d26bf-efee-4a53-a7a8-85b7074ae191">
+
+A minimalist FBP example for network communication ...
