@@ -6,7 +6,7 @@
 
 A minimalist FBP example with a single output emitter node (type int->),
 a single input and output processor node (int->int),
-and a single input receiver node (->int).
+
 
 ## Example 2
 
@@ -44,8 +44,32 @@ formula. The differences from the previous graph include a single emitter
 node that produces a Pair data object (as opposed to a simple data type),
 and a single input, dual output splitter node (Pair(int)=>int).
 
+
+# Future Experiments
+
 ## Example 6
 
 <img width="560" alt="Example6" src="https://github.com/user-attachments/assets/497d26bf-efee-4a53-a7a8-85b7074ae191">
 
-A minimalist FBP example for network communication ...
+A minimalist FBP example for network communication with a single output emitter node (type int->),
+a ktor websocket client sending the date to a ktor websocket server,
+and a single input receiver node (->int).
+
+## Example 7
+
+<img width="565" alt="Example7" src="https://github.com/user-attachments/assets/665f5047-5a51-4602-b638-28b726ae8697">
+
+A minimalist FBP example for network communication with a single output emitter node (Pair(int)->),
+a ktor websocket client sending the data to a ktor websocket server,
+and a single input receiver node (->Pair(int)).
+
+## Example 8
+
+<img width="599" alt="Example8" src="https://github.com/user-attachments/assets/88bffbd0-82d5-43c1-92ec-65180dfb6857">
+
+An FBP example for network communication with a single output emitter node (Pair(int)->),
+a ktor websocket client sending the request data to a ktor websocket server,
+a subGraph representing the Pythagorean formula processing on the server,
+the same ktor websocket server sending the response data to the ktor websocket client,
+and a single input receiver node (->int).
+Question: Can a bi-directional channel handle bidirectional data flowing over a common time span?
