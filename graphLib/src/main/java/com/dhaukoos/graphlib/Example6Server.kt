@@ -17,7 +17,7 @@ fun main() {
 
     val channelString = Channel<String>(2)
     val channelFrame = Channel<Frame>(2)
-    val FrameToIntJob = myGsProcessor<Frame, String>(channelFrame, channelString) {
+    val FrameToStringJob = myGsProcessor<Frame, String>(channelFrame, channelString) {
             frame -> convertFrameTextToString(frame)
     }
     val receiveJob = myGsReceiver(channelString) { i -> println("Received here $i") }

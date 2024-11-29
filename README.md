@@ -46,23 +46,15 @@ and a single input, dual output splitter node (Pair(int)=>int).
 
 ## Example 6
 
-<img width="560" alt="Example6" src="https://github.com/user-attachments/assets/497d26bf-efee-4a53-a7a8-85b7074ae191">
-
-A minimalist FBP example for network communication with a single output emitter node (type int->),
-a ktor websocket client sending the date to a ktor websocket server,
-and a single input receiver node (->int).
-
-# Future Experiments
-
-## Example 7
-
 <img width="565" alt="Example7" src="https://github.com/user-attachments/assets/665f5047-5a51-4602-b638-28b726ae8697">
 
 A minimalist FBP example for network communication with a single output emitter node (Pair(int)->),
 a ktor websocket client sending the data to a ktor websocket server,
 and a single input receiver node (->Pair(int)).
 
-## Example 8
+# Future Experiments
+
+## Example 7
 
 <img width="599" alt="Example8" src="https://github.com/user-attachments/assets/88bffbd0-82d5-43c1-92ec-65180dfb6857">
 
