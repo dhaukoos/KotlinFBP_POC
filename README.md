@@ -44,9 +44,6 @@ formula. The differences from the previous graph include a single emitter
 node that produces a Pair data object (as opposed to a simple data type),
 and a single input, dual output splitter node (Pair(int)=>int).
 
-
-# Future Experiments
-
 ## Example 6
 
 <img width="560" alt="Example6" src="https://github.com/user-attachments/assets/497d26bf-efee-4a53-a7a8-85b7074ae191">
@@ -54,6 +51,8 @@ and a single input, dual output splitter node (Pair(int)=>int).
 A minimalist FBP example for network communication with a single output emitter node (type int->),
 a ktor websocket client sending the date to a ktor websocket server,
 and a single input receiver node (->int).
+
+# Future Experiments
 
 ## Example 7
 

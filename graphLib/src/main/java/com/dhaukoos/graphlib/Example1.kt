@@ -3,6 +3,12 @@ package com.dhaukoos.graphlib
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 
+fun main()
+{
+    println("Hello World")
+    HelloKotlinFBP1()
+}
+
 /*
 * A minimalist FBP example with a single output emitter node (type int->),
 * a single input and output processor node (int->int),

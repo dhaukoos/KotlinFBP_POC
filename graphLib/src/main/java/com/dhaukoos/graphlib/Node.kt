@@ -1,6 +1,13 @@
 package com.dhaukoos.graphlib
 
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
+import io.ktor.client.plugins.websocket.webSocketSession
+import io.ktor.websocket.Frame
+import io.ktor.websocket.WebSocketSession
+import io.ktor.websocket.readText
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -235,9 +242,107 @@ class Node {
             }
         }
 
+        // TODO cleanup websockets additions
 
+        @OptIn(DelicateCoroutinesApi::class)
+        fun <T, U> myGsProcessor(
+            inChannel: ReceiveChannel<T>,
+            outChannel: SendChannel<U>,
+            process: (T) -> U
+        ): Job {
+            return GlobalScope.launch {
+                inChannel.consumeEach { input ->
+                    val output = process(input)
+                    println("Processing $input ==> $output")
+                    outChannel.send(output)
+                }
+            }
+        }
+
+        @OptIn(DelicateCoroutinesApi::class)
+        fun <T> myGsReceiver(
+            inChannel: ReceiveChannel<T>,
+            process: (T) -> Unit
+        ): Job {
+            return GlobalScope.launch {
+                inChannel.consumeEach { input ->
+                    process(input)
+                    println("Node Received $input")
+                }
+            }
+        }
+
+        fun convertFrameTextToString(frame: Frame): String {
+            when (frame) {
+                is Frame.Text -> {
+                    return frame.readText()
+                }
+                else -> {return "Could not read text"}
+            }
+        }
+
+        suspend fun mySessionHandler (incoming: ReceiveChannel<Frame>, outgoing: SendChannel<Frame>,)  {
+            for (frame in incoming) {
+                when (frame) {
+                    is Frame.Text -> {
+                        val text = frame.readText()
+                        outgoing.send(Frame.Text(text))
+                        println("Server receiving: $text")
+                    }
+                    is Frame.Binary -> TODO()
+                    is Frame.Close -> TODO()
+                    is Frame.Ping -> TODO()
+                    is Frame.Pong -> TODO()
+                }
+            }
+        }
+
+        suspend fun senderChannel(session: WebSocketSession, channel: Channel<Frame>) {
+            //session.send(Frame.Text("Hello, server!"))
+            for (frame in channel) {
+                when (frame) {
+                    is Frame.Text -> {
+                        println("Client sending ${frame.readText()}")
+                        session.send(frame)
+                    }
+                    is Frame.Binary -> session.send(frame)
+                    is Frame.Close -> session.send(frame)
+                    is Frame.Ping -> session.send(frame)
+                    is Frame.Pong -> session.send(frame)
+                }
+            }
+        }
+
+        suspend fun receiver(session: WebSocketSession) {
+            for (frame in session.incoming) {
+                when (frame) {
+                    is Frame.Text -> {
+                        val text = frame.readText()
+                        println("Client receiving $text")
+                    }
+                    is Frame.Binary -> TODO()
+                    is Frame.Close -> TODO()
+                    is Frame.Ping -> TODO()
+                    is Frame.Pong -> TODO()
+                }
+            }
+        }
+
+        suspend fun createSendingWebSocketSession(
+            client: HttpClient,
+            urlString: String,
+            channel: Channel<Frame>
+        ): DefaultClientWebSocketSession {
+
+            val session = client.webSocketSession(urlString) // Open a websocket connection
+
+            // ... use the 'session' object to send and receive data
+            senderChannel(session, channel)
+            receiver(session)
+
+            return session
+        }
 
     }
-
 }
 
