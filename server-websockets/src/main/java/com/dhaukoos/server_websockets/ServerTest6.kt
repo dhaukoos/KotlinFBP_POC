@@ -9,6 +9,7 @@ import io.ktor.websocket.Frame
 import kotlinx.coroutines.channels.Channel
 import kotlin.time.Duration.Companion.seconds
 
+
 fun main() {
 
     val channelString = Channel<String>(2)
@@ -18,7 +19,7 @@ fun main() {
     }
     val receiveJob = myGsReceiver(channelString) { i -> println("Received here $i") }
 
-    val myServer = receiverProcess(
+    val myServer = receiverProcess2(
         9002,
         "0.0.0.0",
         "/ws",
@@ -26,7 +27,7 @@ fun main() {
     )
 }
 
-fun receiverProcess(
+fun receiverProcess2(
     port: Int,
     host: String,
     path: String,

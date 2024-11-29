@@ -43,6 +43,7 @@ dependencies {
     implementation(libs.ktor.network)
     implementation(libs.ktor.server.netty)
     implementation(libs.ktor.server.websockets)
+    implementation(libs.ktor.serialization.kotlinx.cbor)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
